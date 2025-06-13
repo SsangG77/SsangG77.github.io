@@ -1,3 +1,10 @@
+---
+title: CS50 Lecture 1 - C
+date: 2025-06-14 03:34:00 +0900
+categories: [방법]
+tags: [Firebase]
+---
+
 # Firebase 웹 애플리케이션 배포 가이드: 과정, 원리, 오류 해결 총정리
 
 Firebase는 Google Cloud Platform(GCP) 위에 구축된 모바일 및 웹 애플리케이션 개발 플랫폼입니다. 개발자가 서버 인프라를 직접 관리하지 않아도 앱을 빠르게 구축하고 배포할 수 있도록 다양한 서버리스 서비스를 제공합니다.
