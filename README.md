@@ -1,3 +1,8 @@
+
+[블로그 링크](https://ssangg77.github.io/)
+노션 블로그에서 여기로 옮기는 중
+---
+
 # Chirpy Starter
 
 [![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
