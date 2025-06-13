@@ -12,6 +12,7 @@ Firebase는 Google Cloud Platform(GCP) 위에 구축된 모바일 및 웹 애플
 ## 1. 배포 전 준비물
 
 *   **Google 계정**: Firebase 프로젝트 생성 및 관리에 필요합니다.
+*   **Firebase Blaze Plan**: Firebase 사용량이 초과하면 요금이 부과되는 플랜 필요합니다.
 *   **Firebase 프로젝트**: 이미 생성되어 있어야 하며, 본 가이드에서는 `toppick-ai` 프로젝트 ID를 예시로 사용합니다. 실제 프로젝트 ID로 대체해야 합니다.
 *   **Node.js 및 npm**: 개발 환경에 설치되어 있어야 합니다.
 *   **터미널/명령 프롬프트**: 모든 명령을 실행합니다.
