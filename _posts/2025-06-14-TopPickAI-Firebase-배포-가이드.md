@@ -1,8 +1,8 @@
 ---
-title: CS50 Lecture 1 - C
+title: Firebase 웹 애플리케이션 배포 가이드: 과정, 원리, 오류 해결 총정리
 date: 2025-06-14 03:34:00 +0900
-categories: [방법]
-tags: [Firebase]
+categories: [Firebase]
+tags: [Firebase, 해결과정, 방법]
 ---
 
 # Firebase 웹 애플리케이션 배포 가이드: 과정, 원리, 오류 해결 총정리
