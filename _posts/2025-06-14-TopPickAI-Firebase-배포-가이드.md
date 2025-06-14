@@ -1,5 +1,5 @@
 ---
-title: Firebase 웹 애플리케이션 배포 가이드: 과정, 원리, 오류 해결 총정리
+title: Firebase 웹 애플리케이션 배포 가이드
 date: 2025-06-14 03:34:00 +0900
 categories: [Firebase]
 tags: [Firebase, 해결과정, 방법]
