@@ -25,3 +25,35 @@ tags: [Swift, Brawlytics]
 
 사실 말로 들어서는 무슨 말인지 모르겠다… 안쪽으로 향한다는게 무슨 말이지. 예제 코드로 이해하는 것이 빠를 것 같다.
 
+</br>
+
+## ✅ 예시 (간단한 검색 기능)
+
+### Entity
+
+```swift
+struct Brawler: Decodable {
+    let id: Int
+    let name: String
+}
+```
+
+### UseCase
+
+```swift
+protocol SearchBrawlerUseCase {
+    func execute(query: String, completion: @escaping ([Brawler]) -> Void)
+}
+
+class SearchBrawlerUseCaseImpl: SearchBrawlerUseCase {
+    private let repository: BrawlerRepository
+
+    init(repository: BrawlerRepository) {
+        self.repository = repository
+    }
+
+    func execute(query: String, completion: @escaping ([Brawler]) -> Void) {
+        repository.search(query: query, completion: completion)
+    }
+}
+```
