@@ -113,7 +113,7 @@ class BrawlerSearchViewModel: ObservableObject {
 
 그렇기 때문에 의존성 방향을 바깥에서 안쪽으로 흐르도록 해야 한다.
 
-![image.png](attachment:fe5d287d-2dcd-4dd3-b639-32b56f6eba7c:image.png)
+![Image](https://github.com/user-attachments/assets/cfffccd2-b934-4de3-83f2-3093880d3872)
 
 ### 2. 테스트 용이성
 
