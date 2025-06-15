@@ -60,3 +60,61 @@ class SearchBrawlerUseCaseImpl: SearchBrawlerUseCase {
     }
 }
 ```
+
+### Repository 
+
+```swift
+protocol BrawlerRepository {
+    func search(query: String, completion: @escaping ([Brawler]) -> Void)
+}
+
+
+class BrawlerRepositoryImpl: BrawlerRepository {
+    func search(query: String, completion: @escaping ([Brawler]) -> Void) {
+        // URLSession 등 실제 API 호출
+    }
+}
+```
+
+### ViewModel
+```swift
+class BrawlerSearchViewModel: ObservableObject {
+    @Published var results: [Brawler] = []
+
+    private let searchUseCase: SearchBrawlerUseCase
+
+    init(searchUseCase: SearchBrawlerUseCase) {
+        self.searchUseCase = searchUseCase
+    }
+
+    func search(_ text: String) {
+        searchUseCase.execute(query: text) { [weak self] brawlers in
+            DispatchQueue.main.async {
+                self?.results = brawlers
+            }
+        }
+    }
+}
+```
+
+해당 코드를 보니 View → ViewModel → UseCase → Repository → Entity 의 방향으로 의존한다는 것을 알 수 있다.
+
+</br>
+
+### 근데 왜 항상 바깥 → 안쪽 방향으로 의존 방향이 흐르도록 해야 할까?
+
+
+### 1. 비즈니스 로직 보호
+
+
+만약 서로 의존하거나 방향이 반대로 되어있으면 어떻게 될까? UI, 네트워크, DB는 변화가 잦기 때문에 외부가 변하면 메인 로직도 변경해야 할 수도 있다. 
+
+
+그렇기 때문에 의존성 방향을 바깥에서 안쪽으로 흐르도록 해야 한다.
+
+
+![Image](https://github.com/user-attachments/assets/9d6a7f20-ab2d-4d9a-bb0c-b130e971c5f4)
+
+
+
+
