@@ -116,5 +116,26 @@ class BrawlerSearchViewModel: ObservableObject {
 ![Image](https://github.com/user-attachments/assets/9d6a7f20-ab2d-4d9a-bb0c-b130e971c5f4)
 
 
+### 2. 테스트 용이성
 
+
+Mock 객체로 쉽게 대체 가능하고 단위 테스트가 수월해진다.
+
+
+### 3. **관심사 분리 (Separation of Concerns)**
+
+
+- UI는 UI만
+- 로직은 로직만
+- 저장은 저장만
+  
+
+이렇게 책임을 분리하면 → 유지보수성과 확장성 증가한다.
+
+
+### 4. **의존성 역전 원칙 (DIP)**
+
+
+- 상위 계층(UseCase)이 하위 구현(예: APIService)이 아닌 **인터페이스**에만 의존하게 한다.
+- 구체적인 구현은 바깥에 감춰지고 → 안쪽은 안정적인 추상화만 바라본다.
 
