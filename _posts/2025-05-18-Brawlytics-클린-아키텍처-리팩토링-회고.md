@@ -34,9 +34,13 @@ tags: [Swift, Brawlytics]
 
 ---
 
+
 ## ✅ 예시 (간단한 검색 기능)
 
+
+
 ### Entity
+
 
 ```swift
 struct Brawler: Decodable {
@@ -45,7 +49,10 @@ struct Brawler: Decodable {
 }
 ```
 
+
 ### UseCase
+
+
 
 ```swift
 protocol SearchBrawlerUseCase {
@@ -65,7 +72,9 @@ class SearchBrawlerUseCaseImpl: SearchBrawlerUseCase {
 }
 ```
 
+
 ### Repository
+
 
 ```swift
 protocol BrawlerRepository {
@@ -79,7 +88,9 @@ class BrawlerRepositoryImpl: BrawlerRepository {
 }
 ```
 
+
 ### ViewModel
+
 
 ```swift
 class BrawlerSearchViewModel: ObservableObject {
@@ -101,11 +112,15 @@ class BrawlerSearchViewModel: ObservableObject {
 }
 ```
 
+
 ---
+
 
 해당 코드를 보니 View → ViewModel → UseCase → Repository → Entity 의 방향으로 의존한다는 것을 알 수 있다.
 
+
 ### 근데 왜 항상 바깥 → 안쪽 방향으로 의존 방향이 흐르도록 해야 할까?
+
 
 ### 1. 비즈니스 로직 보호
 
