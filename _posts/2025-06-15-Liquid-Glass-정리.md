@@ -50,4 +50,4 @@ Liquid Glass 아래에 테이블뷰를 구성하면 다른 요소와 맞닿아 �
 
 
 ---
-![원본 영상 보러 가기](https://developer.apple.com/kr/videos/play/wwdc2025/219/)
+[원본 영상 보러 가기](https://developer.apple.com/kr/videos/play/wwdc2025/219/)
