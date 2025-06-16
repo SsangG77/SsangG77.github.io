@@ -1,8 +1,8 @@
 ---
 title: UICollectionViewDiffableDataSource란
 date: 2025-06-12 12:00:00 +0900
-categories: [개념]
-tags: [컬렉션뷰]
+categories: [개념, Swift]
+tags: [컬렉션뷰, Swift]
 ---
 
 ### ✅ 기존 방식의 문제
