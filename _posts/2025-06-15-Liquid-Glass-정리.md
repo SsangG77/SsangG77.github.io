@@ -1,7 +1,7 @@
 ---
 title: Liquid Glass 정리
 date: 2025-06-15 00:34:00 +0900
-categories: [WWDC]
+categories: [Conference, WWDC]
 tags: [WWDC]
 ---
 
