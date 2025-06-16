@@ -1,7 +1,7 @@
 ---
 title: 
 date: 2025-06-12 12:00:00 +0900
-categories: [개념]
+categories: [개념, Swift]
 tags: [Swift, 컬렉션뷰]
 ---
 
