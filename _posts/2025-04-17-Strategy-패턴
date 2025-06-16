@@ -1,0 +1,61 @@
+---
+title: Strategy 패턴
+date: 2025-04-17 12:00:00 +0900
+categories: [개념, 디자인 패턴]
+tags: [Strategy 패턴]
+---
+
+# 개요
+
+어떤 클래스의 로직을 특정 상황에 바꾸고 싶을 때, 그 로직을 별도로 분리하는 패턴.
+
+- 조건문 남용 방지할 수 있음.
+- 런타임에 객체가 사용하는 로직(함수)를 변경할 수 있음.
+
+## 코드
+
+```swift
+// 프토토콜 정의
+protocol AttackStrategy {
+    func attack()
+}
+
+// 프로토콜을 준수하는 여러 클래스 정의
+class SwordAttack: AttackStrategy {
+    func attack() {
+        print("검으로 공격!")
+    }
+}
+
+class MagicAttack: AttackStrategy {
+    func attack() {
+        print("마법으로 공격!")
+    }
+}
+
+// 프로토콜을 준수하는 클래스를 멤버변수로 가지는 클래스를 정의
+class Character {
+    var strategy: AttackStrategy
+
+    init(strategy: AttackStrategy) {
+        self.strategy = strategy
+    }
+
+		// 주입된 행동 클래스의 함수를 실행
+    func performAttack() {
+        strategy.attack()
+    }
+}
+```
+<br>
+
+```swift
+// 초기화할때 프르토콜 준수 객체를 주입
+let warrior = Character(strategy: SwordAttack())
+warrior.performAttack() // 검으로 공격!
+
+// 런타임중 새 객체 주입
+warrior.strategy = MagicAttack()
+warrior.performAttack() // 마법으로 공격!
+```
+
