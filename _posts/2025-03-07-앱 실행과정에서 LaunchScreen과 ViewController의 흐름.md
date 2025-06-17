@@ -2,7 +2,7 @@
 title: 
 date: 2025-03-07 12:00:00 +0900
 categories: [개념, Swift]
-tags: []
+tags: [ViewController]
 ---
 
 1. **앱 실행 → `LaunchScreen.storyboard` 표시**
