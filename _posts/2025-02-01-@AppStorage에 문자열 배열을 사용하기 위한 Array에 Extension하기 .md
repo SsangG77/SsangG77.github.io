@@ -47,7 +47,7 @@ Array 타입을 `RawRepresentable` 프로토콜을 준수하도록 확장하는 
 Array는 제네릭 타입인데 `Array<Element>`에서 `Element`가 어떤 타입이든 올 수 있지만 `where Element: Codable`을 추가해서 배열의 요소가 `Codable`을 준수하는 타입에만 `RawRepresentable`을 적용할 수 있도록 제한한다.
 
 <aside>
-<img src="/icons/dialogue_yellow.svg" alt="/icons/dialogue_yellow.svg" width="40px" />
+
 
 여기서 where이란?
 
