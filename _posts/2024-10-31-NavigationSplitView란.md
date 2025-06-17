@@ -12,6 +12,9 @@ tags: []
 `NavigationSplitView`는 SwiftUI에서 iPadOS, macOS 등 **큰 화면에서 마스터-디테일 구조를 구현할 수 있는 기본 제공 UI 컴포넌트**다.
 iOS 16+, macOS 13+부터 지원되며, 기존의 `NavigationView`보다 훨씬 명확한 **3단 분할 구조**를 지원한다.
 
+
+![Image](https://github.com/user-attachments/assets/b0b58d2c-e6f0-474b-aef1-4924917576bb)
+
 ---
 
 ## 기본 구조
