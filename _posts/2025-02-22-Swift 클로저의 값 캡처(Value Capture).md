@@ -175,4 +175,3 @@ class MyViewModel: ObservableObject {
   self가 확실히 살아있음을 보장할 수 있을 때만 `unowned self` 사용
 * SwiftUI의 버튼, `.onAppear`, `.task` 클로저 등에서도 항상 `self` 캡처에 주의
 
-```
