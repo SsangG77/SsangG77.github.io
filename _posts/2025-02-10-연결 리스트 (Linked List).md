@@ -12,6 +12,9 @@ tags: []
 
 iOS 개발에서 컬렉션 타입은 기본이다. 대부분은 `Array`로 시작하지만, 내부 동작이나 성능 최적화를 고려하다 보면 다른 자료구조도 반드시 이해해야 한다. 그중 대표적인 것이 \*\*연결 리스트(Linked List)\*\*다. Swift로 직접 구현해보며 개념과 특성을 정리한다.
 
+![Image](https://github.com/user-attachments/assets/56c00ac6-4ac1-4ec1-96cc-9acae5e3af6a)
+
+
 ---
 
 ## 배열과 뭐가 다른가?
