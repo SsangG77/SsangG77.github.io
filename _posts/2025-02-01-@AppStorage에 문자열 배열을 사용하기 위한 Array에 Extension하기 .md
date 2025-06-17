@@ -1,5 +1,5 @@
 ---
-title: @AppStorage에 문자열 배열을 사용하기 위한 Array에 Extension하기 
+title: AppStorage에 문자열 배열을 사용하기 위한 Array에 Extension하기 
 date: 2025-02-01 12:00:00 +0900
 categories: [가이드]
 tags: []
