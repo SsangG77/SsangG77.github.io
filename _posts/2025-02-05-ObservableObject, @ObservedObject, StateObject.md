@@ -1,7 +1,7 @@
 ---
 title: ObservableObject, @ObservedObject, StateObject
 date: 2025-02-05 12:00:00 +0900
-categories: [개념, Swift, Combine]
+categories: [개념, SwiftUI]
 tags: [Combine]
 ---
 
