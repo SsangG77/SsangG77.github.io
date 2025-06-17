@@ -1,7 +1,7 @@
 ---
 title: map 연산자, flatmap 연산자
 date: 2025-03-05 12:00:00 +0900
-categories: [개념, Swift]
+categories: [개념, RxSwift]
 tags: [map, flatMap]
 ---
 
