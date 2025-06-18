@@ -1,5 +1,5 @@
 ---
-title: @StateObject란
+title: StateObject란
 date: 2023-08-26 12:00:00 +0900
 categories: [개념, SwiftUI]
 tags: []
