@@ -1,5 +1,5 @@
 ---
-title: Java IO의 핵심: Stream, Reader, Writer, 그리고 Buffered 클래스 총정리
+title: Java IO의 핵심, Stream, Reader, Writer, 그리고 Buffered 클래스 총정리
 date: 2022-05-16 12:00:00 +0900
 categories: [개념, JAVA]
 tags: [stream, buffer]
