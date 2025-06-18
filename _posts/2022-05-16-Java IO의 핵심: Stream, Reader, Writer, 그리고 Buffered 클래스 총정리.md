@@ -8,6 +8,8 @@ tags: [stream, buffer]
 
 
 
+
+
 ## 1. Stream vs Reader/Writer
 
 | 구분     | Stream                        | Reader/Writer      |
