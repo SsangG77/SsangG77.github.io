@@ -1,5 +1,5 @@
 ---
-title: @EnviromentObject란
+title: EnviromentObject란
 date: 2024-05-31 12:00:00 +0900
 categories: [개념, SwiftUI]
 tags: []
