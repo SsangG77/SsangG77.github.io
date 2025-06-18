@@ -1,5 +1,5 @@
 ---
-title: @SPublished란
+title: Published란
 date: 2023-09-03 12:00:00 +0900
 categories: [개념, SwiftUI]
 tags: []
