@@ -1,5 +1,5 @@
 ---
-title: addTarget(_ : action : for : )
+title: "addTarget(_ : action : for : )"
 date: 2025-02-18 12:00:00 +0900
 categories: [개념, UIKit]
 tags: [Obj-c]
