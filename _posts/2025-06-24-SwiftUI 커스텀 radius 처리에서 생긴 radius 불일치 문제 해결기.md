@@ -54,6 +54,13 @@ stroke는 radius 24처럼 더 둥글게 보임
 
 ---
 
+> 여기서 cornerRadius란?
+> cornerRadius의 값을 반지름으로 가지는 원을 각 모서리에 내접하여 생기는 둥근정도를 나타내는 것이다.
+> ![Image](https://github.com/user-attachments/assets/a570443a-882e-4bea-ba2c-fa2a1d25f390)
+
+
+---
+
 ### 원인 분석
 
 #### ✅ 핵심 원인: stroke는 경계선 중심 기준으로 그려진다
