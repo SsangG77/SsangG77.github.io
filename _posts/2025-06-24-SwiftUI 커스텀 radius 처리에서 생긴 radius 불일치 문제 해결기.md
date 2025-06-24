@@ -52,6 +52,8 @@ extension View {
 예: radius 20을 줬는데
 stroke는 radius 24처럼 더 둥글게 보임
 
+![Image](https://github.com/user-attachments/assets/577ce312-ad26-46f2-8cf9-026a0e5ee2d0)
+
 ---
 
 > 여기서 cornerRadius란?
