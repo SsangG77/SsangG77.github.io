@@ -17,9 +17,6 @@ tags: [iOS, Swift, WWDC, AI]
 온디바이스이기 때문에 오프라인에서 가능하고 보안 측면에서도 유리하다.
 
 
-
-## 예제
-
 ### 프롬프트 보내기
 해당 코드는 모델에 프롬프트를 보내는 예제이다.
 session을 생성하여 .respond 메소드에 프롬프트를 전달하여 응답을 받을 수 있다.
@@ -32,6 +29,39 @@ import Playgrounds
     let response = try await session.respond(to: "What's a good name for a trip to Japan? Respond only with a title")
 }
 ```
+
+<br>
+
+### 가이드 기반 생성
+기본적으로 언어 모델은 비구조적 자연어를 출력하는데 뷰에 이것을 바로 적용시키기는 어렵다.
+일반적인 해결 방법은 JSON이나 CSV같은 분석하기 쉬운 형태로 요청하는 것인데 그렇게 하면 요청사항들을 계속해서 추가해줘야 하는 문제가 또 발생한다.
+이를 해결하기 위해 @Generable, @Guide를 활용하여 가이드 기반 생성을 하는 것이다.
+
+```
+@Generable
+struct SearchSuggestions {
+  @Guide(description: "가이드 설명글 작성 부분", .count(4))
+  var searchTerms: [String]
+}
+
+let prompt = """
+  Generate a list of suggested search terms for an app about visiting famous landmarks.
+"""
+
+let response = try await session.respond(
+  to: prompt,
+  generating: SearchSuggestions.self
+)
+```
+이렇게 작성하면 프롬프트에 출력 형식을 따로 지정할 필요가 없게 되어 간결하게 사용이 가능하다.
+Generable 타입은 부동소수점 십진수, 불리언, 문자열, 배열로 구성이 가능하며 재귀 타입도 지원한다.
+
+
+
+
+
+
+
 
 
 
