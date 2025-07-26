@@ -6,7 +6,7 @@ tags: [도서]
 ---
 
 
-# 1. 스위프트 기초
+# 스위프트 기초
 ## 스위프트 언어의 특성
 - 안전성: 개발자의 실수를 강제적이라고 느낄 수 있는 문법적 제재(옵셔널, guard 구문 등)를 통해 제어.
 - 객체지향 프로그래밍: 여러 개의 독립된 단위인 객체의 모임으로 파악. 객체는 서로 메시지를 주고받으며 데이터 처리
@@ -46,7 +46,7 @@ tags: [도서]
 
 
 
-# 2. 스위프트 시작하기
+# 스위프트 시작하기
 ## 변수와 상수
 변수와 상수를 이용해 필요한 데이터들을 메모리에 임시로 저장
 변수: 생성 후 데이터 변경 가능 - `var`로 선언
@@ -56,7 +56,269 @@ tags: [도서]
 변수 생성시 타입을 생략하면 컴파일러가 타입을 추론함
 ```
 
-## 데이터 타입
+# 데이터 타입
+## Int와 UInt
+Int: +, - 를 포함한 정수
+UInt: 0을 포함한 양의 정수
+- 각각 8, 16, 32, 64비트의 형태가 있음 ( 예) Int8, UInt8 )
+- 시스템 아키텍처에 따라 32비트에서는 Int32, UInt32가 Int, UInt 타입으로 지정되고 64비트도 마찬가지
+- 정수 범위: Int.min < UInt.min(== 0) < Int.max < UInt.max
+
+### Bool
+참(`true`), 거짓(`false`)만 가지는 타입
+```
+var boolean: Bool = false
+print(boolean) // false
+boolean.toggle()
+print(boolean) // true
+```
+
+
+
+### Float, Double
+부동소수점을 사용하는 실수, 부동소수 타입
+Float: 32비트로 표현 -> 최소 6자리의 숫자까지 표현 가능
+Double: 62비트로 표현 -> 최소 15자리의 숫자까지 표현 가능
+
+- 임의의 수 만들기
+  ```
+  Int.random(in: -100...100)
+  UInt.random(in: 1...30)
+  Double.random(in: 1.5...4.3)
+  Float.random(in: -0.5...1.5)
+  ```
+
+
+
+### Character
+단 하나의 문자
+유니코드, 한글 등으로 사용 가능
+```
+let cha: Character = "A"
+```
+
+
+### String
+문자의 나열. 즉 문자열
+```
+let name: String = "Cha Sangjin"
+let greeting = """
+안녕하세요. 저는 차상진입니다.
+"""
+```
+
+### Any, AnyObject와 nil
+Any: 스위프트의 모든 데이터 타입을 사용할 수 있다는 뜻
+```
+var value: Any
+
+value = 123
+value = "Swift 최고!"
+value = true
+
+```
+
+AnyObject: Any보다는 조금 한정된 의미로 클래스의 인스턴스만 할당 가능
+구조체(struct)나 열거형(enum)은 담을 수 없고, 오직 클래스(class) 인스턴스만 가능
+
+```
+class Car {
+    var brand: String
+    init(brand: String) {
+        self.brand = brand
+    }
+}
+
+class Book {
+    var title: String
+    init(title: String) {
+        self.title = title
+    }
+}
+
+let items: [AnyObject] = [
+    Car(brand: "Tesla"),
+    Book(title: "Swift의 정석")
+]
+
+for item in items {
+    if let car = item as? Car {
+        print("자동차 브랜드: \(car.brand)")
+    } else if let book = item as? Book {
+        print("책 제목: \(book.title)")
+    }
+}
+
+```
+
+
+# 데이터 타입 심화
+- 서로 다른 타입끼리 데이터 교환시 타입캐스팅(형변환)을 거쳐야 함
+
+## 타입 별칭 추가
+```
+typealias MyInt = Int
+typealias YourInt = Int
+
+let age: MyInt = 100
+let year: YoutInt = 2025
+
+age = year // 같은 Int라서 할당 가능
+```
+
+## 튜플
+- 지정된 데이터의 묶음
+
+1. 인덱스로 접근 가능
+```
+var person: (String, Int, Double) = ("sangjin", 27, 182.4)
+print("이름: \(person.0)")
+```
+
+2. 이릉으로 접근 가능
+```
+var person: (name: String, age: Int, height: Double) = ("sangjin", 27, 182.4)
+print("이름: \(person.name)")
+```
+
+3. 별칭 지정 가능
+```
+typealias PersonTuple = (name: String, age: Int, height: Double)
+
+let sangjin: PersonTuple = ("sangjin", 27, 183.2)
+```
+
+## 컬렉션형
+### 배열 
+- 같은 타입의 데이터를 일렬로 나열
+```
+// 동일한 표현
+var nums: Array<Int> = [0, 1, 2]
+var nums: [Int] = [0, 1, 2]
+```
+
+### 딕셔너리
+- 순서없이 키와 값이 쌍으로 구성되는 컬렉션 타입
+- 키는 유일해야 함
+```
+var numberForname: [String:Int] = ["sangjin" : 10, "Haewon" : 20]
+print(numberForName["sangjin"]) // 10 출력
+numberForName["sangjin"] = 15 // 15 할당
+numberForName["winter"] = 25 // 새 딕셔너리 키 생성과 값 할당
+
+```
+
+
+
+
+### 세트
+- 데이터들을 순서없이 중복없이 하나의 묶음으로 저장하는 형태의 컬렉션 타입
+- 세트의 요소는 해시 가능한 값이어야 함
+- Array와 마찬가지로 대괄호를 사용하기때문에 타입 추론시 Array로 추론함
+```
+var names: Set<String> = []
+names = ["sangjin", "winter", "haewon"]
+```
+
+`insert`로 삽입
+```
+names.insert("karina")
+```
+
+`remove`로 제거
+```
+names.remove("sangjin")
+```
+
+- 또한 세트 내부의 값들은 유일함을 보장하기 때문에 교집합, 여집합 등 여러 집합연산이 필요할 때 유용하다.
+
+
+### 열거형
+- 연관된 항목들을 묶어서 표현
+- 정의시 외에 추가/수정 불가
+- 원시 값(raw value)형태로 실제 값을 가질 수도 있음
+
+1. 열거형 정의
+   아래의 두가지 방식으로 정의 가능
+    ```
+    enum School {
+      case middle
+      case high
+      case college
+    }
+
+    enum School {
+      case middle, high, college
+    }
+    ```
+  
+3. 열겨형 변수 생성
+   아래의 두가지 방식으로 정의 가능
+   ```
+   var school: School = School.middle
+   var school = .middle
+   ```
+  
+5. 열거형 원시 값 할당
+   ```
+    enum School: String {
+      case middle = "중학교"
+      case high = "고등학교"
+      case college = "대학교"
+    }
+
+   let school: School = .middle
+   print(school.rawValue) // 중학교
+   ```
+
+6. 원시 값 일부만 할당
+- Swift의 enum에서 rawValue를 명시하지 않으면, 숫자형 타입에서는 이전 값보다 1 증가된 숫자가 자동 할당되고, 문자열 타입에서는 case 이름이 자동으로 원시값으로 사용
+```
+enum School: String {
+      case middle = "중학교"
+      case high = "고등학교"
+      case college
+    }
+let school: School = .college
+print(school.rawValue) // college
+```
+```
+enum Numbers: Int {
+  case a       // 0
+  case b       // 1
+  case c = 10
+  case d       // 11 ← 자동 증가
+}
+
+let num: Numbers = .d
+print(num) // 11
+```
+
+7. 연관 값을 갖는 열겨형
+- 열거형 내의 항목이 자신과 연관된 값을 가질 수 있음
+- 항목별로 다른 값, 다른 타입을 가질 수 있음
+```
+// 정의
+enum MainDish {
+  case pasta(taste: String)
+  case pizza(dough: String, topping: String)
+  case chicken
+}
+
+var dinner: MainDish = .pasta(taste: "크림")
+dinner = .pizza(dough: "치즈 크러스트", topping: "불고기")
+
+// 사용
+switch MainDish {
+  case pasta(let taste):
+    print(taste) // 크림
+  case pizza(dough, topping): // let 생략 가능
+    print("\(dough), \(topping)") // 치즈 크러스트, 불고기
+  case chicken:
+    print("치킨")
+}
+
+```
 
 
 
