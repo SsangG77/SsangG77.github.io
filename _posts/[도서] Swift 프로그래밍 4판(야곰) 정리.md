@@ -1,5 +1,5 @@
 ---
-title: [도서] Swift 프로그래밍 4판(야곰) 정리
+title: Swift 프로그래밍 4판(야곰) 정리
 date: 2025-07-25 12:00:00 +0900
 categories: [Swift]
 tags: [도서]
