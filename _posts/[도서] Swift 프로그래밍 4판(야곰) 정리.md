@@ -321,7 +321,20 @@ switch MainDish {
 ```
 
 
+8. 항목 순회
+- 열거형의 항목들을 순회가능하도록 만들려면 `CaseIterable`프로토콜을 채택해야 함
+  ```
+  enum School: CaseIterable {
+    case primary
+    case elementary
+    case middle
+    case high
+    case cellege
+  }
 
+  let allCases: [School] = School.allCases
+  print(allCases) // [primary, elementary, ...]
+  ```
 
 
 
