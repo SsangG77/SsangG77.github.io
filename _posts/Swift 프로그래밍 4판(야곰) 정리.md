@@ -409,6 +409,60 @@ if Condition.bad < Condition.great {
 
 
 
+# 연산자
+
+### 삼항 연산자
+```
+var boolValue = false
+var result = boolValue ? "참" : "거짓" // 거짓 출력
+
+boolValue = true
+result = boolValue ? "참" : "거짓" // 참 출력
+
+```
+
+### 범위 연산자
+- 폐쇄 범위 연산자 : A부터 B까지의 수를 묶어 표현.(A, B 포함) `A...B`
+- 반폐쇄 범위 연산자 : A부터 B미만까지 수를 묶어 표현 (A만 포함) `A..<B`
+- 단방향 범위 연산자 :
+  - A 이상의 수를 묶어 표현 (A포함) `A...`
+  - A 이하의 수를 묶어 표현 (A포함) `...A`
+  - A 미만의 수를 묶어 표현 (A 미포함) `..<A`
+ 
+### 기타 연산자
+- nil 병합 연산자 : A가 nil이면 B 반환, 아니면 A 반환 `A ?? B`
+- 옵셔널 강제 추출 연산자 : `A!`
+- 옵셔널 연산자 : 안전하게 추출하거나 A가 옵셔널임을 표현 `A?`
+
+
+### 사용자 정의 연산자
+- 연산자 종류:
+  - 전위 연산자(`prefix`) : 피연산자 앞에 위치 `!A`
+  - 중위 연산자(`infix`) : 피연산자들 사이에 위치 `A + B`
+  - 후위 연산자(`postfix`) : 연산자 뒤에 위치 `A!`
+
+- 연산자 키워드 : `operator`
+- 전위 연산자 정의 예제
+```
+prefix operator ** // 새로 만들때는 정의하기
+prefix func ** (value: Int) -> Int {
+  return value * value
+}
+
+let num = -5
+let squareNum = **num
+print(squareNum) // 25
+```
+
+- 중위 연산자는 피연산자 사이에 위치하는 것이 명확하기 때문에 `func`앞에 키워드를 안붙여도 됨
+
+
+# 흐름 제어
+
+
+
+
+
 
 
 
