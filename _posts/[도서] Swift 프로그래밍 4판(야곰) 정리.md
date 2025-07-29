@@ -336,6 +336,82 @@ switch MainDish {
   print(allCases) // [primary, elementary, ...]
   ```
 
+- 하지만 연관값이 있을 경우에는 모든 값 조합을 컴파일러가 알 수 없기 때문에 allCases 프로퍼티를 사용할 수 없음
+- 이럴 경우 직접 프로퍼티를 정의하여 사용
+  ```
+  enum PastaTaste: CaseIterable {
+    case Cream, tomato
+  }
+  
+  enum PizzaDough: CaseIterable {
+     case cheeseCrust, thin, original
+  }
+  
+  enum PizzaTopping: CaseIterable {
+     case pepperoni, cheese, bacon
+  }
+  
+  enum MainDish: CaseIterable {
+      case pasta(taste: PastaTaste)
+      case pizza(dough: PizzaDough, topping: PizzaTopping)
+      case chicken(withSauce: Bool)
+      case rice
+  }
+
+  var allCases: [MainDish] {
+     return PastaTaste.allCases.map(MainDish.pasta)
+      + PizzaDough.allCases.reduce([]) { (result, dough) -> [MainDish] in 
+        result + PizzaTopping.allCases.map { (topping) -> MainDish in 
+          MainDish.pizza(dough: dough, topping: topping)
+        }
+    }
+  }
+
+  ```
+
+9. 순환 열겨형
+- 열겨형 항목의 관련 값이 자신일 때 사용
+- 순환 열거형을 특정항목만 한정한다면 항목 앞에, 전체에 적용할 경우 enum 키워드 앞에 `indirect`키워드 사용
+```
+// 정의 에제
+enum ArithmeticExpression {
+    case number(Int)
+    indirect case addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+
+// 사용 예제
+let five = ArithmeticExpression.number(5) // 5
+let four = ArithmeticExpression.number(4) // 4
+let sum = ArithmeticExpression.addition(five, four) // 9
+let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2)) // 18
+```
+
+
+10. 비교 가능한 열거형
+- `Comparable` 프로토콜을 준수하면 각 항목을 비교할 수 있음
+- 작은 순서대로 작성
+```
+enum Condition: Comparable {
+  case bad
+  case good
+  case great
+}
+
+if Condition.bad < Condition.great {
+  print("Great")
+} else {
+  print("Bad")
+}
+
+// Great 출력
+```
+
+
+
+
+
+
 
 
 
