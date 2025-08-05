@@ -44,7 +44,7 @@ tags: [도서]
   스위프트는 구조체와 열거형에 기존의 클래스에서 구현할 수 있었던 캡슐화, 추상화, 접근 제어 등의 기능을 모두 구현 가능
   더불어 프로토콜 익스텐선을 활용할 수 있기 때문에 프로토콜 지향 프로그래밍이 가능
 
-
+<br>
 
 # 스위프트 시작하기
 ## 변수와 상수
@@ -55,6 +55,8 @@ tags: [도서]
 ```
 변수 생성시 타입을 생략하면 컴파일러가 타입을 추론함
 ```
+
+<br>
 
 # 데이터 타입
 ## Int와 UInt
@@ -151,6 +153,7 @@ for item in items {
 
 ```
 
+<br>
 
 # 데이터 타입 심화
 - 서로 다른 타입끼리 데이터 교환시 타입캐스팅(형변환)을 거쳐야 함
@@ -187,6 +190,8 @@ typealias PersonTuple = (name: String, age: Int, height: Double)
 
 let sangjin: PersonTuple = ("sangjin", 27, 183.2)
 ```
+
+<br>
 
 ## 컬렉션형
 ### 배열 
@@ -407,7 +412,7 @@ if Condition.bad < Condition.great {
 // Great 출력
 ```
 
-
+<br>
 
 # 연산자
 
@@ -457,21 +462,112 @@ print(squareNum) // 25
 - 중위 연산자는 피연산자 사이에 위치하는 것이 명확하기 때문에 `func`앞에 키워드를 안붙여도 됨
 
 
+<br>
+
 # 흐름 제어
 
+### if문
+### switch문
+- fallthrough 사용
+case문이 실행되고 그 다음 case문이 실행되게 하기 위해서는 `fallthrough`를 사용하면 됨
+```
+let stringValue = "joker"
+switch stringValue {
+case "joker":
+    print("joker")
+case "sangjin"
+    fallthrough
+}
+```
+
+- 튜플 사용
+튜플로도 switch문 사용 가능
+```
+typealias NameAge = (name: String, age: Int)
+let tupleValue: NameAge = ("sangjin", 21)
+
+switch tupleValue {
+case ("sangjin", 21):
+  print(true)
+default:
+  print(false)
+}
+```
+
+와일드 카드 식별자를 활용
+```
+typealias NameAge = (name: String, age: Int)
+let tupleValue: NameAge = ("sangjin", 21)
+
+switch tupleValue {
+case ("sangjin", 21):
+  print(true)
+case (_, 21): // 와일드 카드 사용
+  print("나이만 맞음")
+default:
+  print(false)
+}
+```
+
+
+값 바인딩을 사용
+```
+typealias NameAge = (name: String, age: Int)
+let tupleValue: NameAge = ("sangjin", 21)
+
+switch tupleValue {
+case ("sangjin", 21):
+  print(true)
+case (let name, 21): // 바인딩 사용
+  print("이름은 \(name), 나이만 맞음.")
+default:
+  print(false)
+}
+```
+
+unknown 속성 사용
+- default로 처리를 해놨는데 새로운 케이스가 추가되었을때 default로 처리되지 않고 추가한 case에 대한 경고를 표시해주기 위한 속성
+```
+enum Num {
+  case 0, 1
+}
+
+let value = 0
+
+switch value {
+case 0:
+  print(0)
+@unknown default: // 1에 대한 처리를 하지 않아서 경고 발생
+  print("다른 숫자")
+}
+```
+
+
+### 표현으로서의 조건문
+- 표현 형식을 사용하면 if 나 switch의 조건 결과를 변수나 상수에 바로 할당 가능
+```
+  let someInt = 100
+  let size: String = if someInt > 10 { "큰 수" } else { "작은 수" } // 바로 할당
+```
+
+```
+  enum Menu {
+    case chicken, pizza, hamburger
+  }
+
+  let lunch = .pizza
+
+  let menu: String = switch lunch {
+    case .pizza: "피자"
+    default: "음식 없음"
+  }
+```
+
+
+# 반복문
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-  
