@@ -81,6 +81,7 @@ TabView {}
   Toolbar 안에 있는 요소들 중 그룹별로 분리하고 싶은 부분에 `ToolbarSpacer(.fixed)`를 삽입
   
 <img width="481" height="216" alt="Image" src="https://github.com/user-attachments/assets/849dae0c-d617-4247-b8c0-3d7dac4b6dab" />
+
 ![Image](https://github.com/user-attachments/assets/849dae0c-d617-4247-b8c0-3d7dac4b6dab)
 ```
 ScrollView {
