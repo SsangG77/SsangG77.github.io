@@ -55,6 +55,7 @@ Liquid Glass 아래에 테이블뷰를 구성하면 다른 요소와 맞닿아 �
 ### App structure
 
 - TabView 스크롤시 최소화 적용하기
+
 ![Image](https://github.com/user-attachments/assets/21bdb02b-f007-428e-9118-8ba6c799a7eb)
 
 ```
@@ -79,8 +80,6 @@ TabView {}
 
 - Toolbar에서 요소별로 그룹핑하는 방법
   Toolbar 안에 있는 요소들 중 그룹별로 분리하고 싶은 부분에 `ToolbarSpacer(.fixed)`를 삽입
-  
-<img width="481" height="216" alt="Image" src="https://github.com/user-attachments/assets/849dae0c-d617-4247-b8c0-3d7dac4b6dab" />
 
 ![Image](https://github.com/user-attachments/assets/849dae0c-d617-4247-b8c0-3d7dac4b6dab)
 ```
