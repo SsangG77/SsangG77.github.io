@@ -77,16 +77,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 > ```
 > 
 
-<aside>
-📖
-
-> **다른글**
-> 
-> 
-> [제목 없음](https://www.notion.so/191ee035a51f80f693d0e2582484a734?pvs=21)
-> 
-</aside>
-
 ---
 
 - 전체 코드
