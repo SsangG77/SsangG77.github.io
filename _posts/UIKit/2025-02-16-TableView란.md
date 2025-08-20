@@ -7,16 +7,58 @@ tags: [TableView]
 
 
 여러 데이터들을 리스트처럼 스크롤할 수 있게 나타내는 뷰이다. 그렇기 때문에 ScrollView를 상속받는다.
+많은 데이터를 나타낼때 모든 데이터를 메모리에 올리지 않고 화면에 나타나는 뷰들만 메모리에 올라가기때문에 메모리 관리에 용이하다.
 
-많은 데이터를 나타낼때 모든 데이터를 메모리에 올리지 않고 화면에 나타나는 데이터들만 메모리에 올라가기때문에 메모리 관리에 용이하다.
+## 개념별 예제
 
-## 1. 사용 예제
-
-- 테이블뷰가 있는 뷰와 뷰컨트롤러를 연결시킨다.
+- 테이블뷰와 뷰컨트롤러를 연결시킨다.
 - 테이블뷰에 필요한 클래스, 프로토콜을 상속받는다. (UITableView를 관리하기 위한 객체로 설정하기 위해서)
 
 ```swift
-class NewVC: UIViewController, UITableVIewDataSource, UITableViewDelegate
+class ViewController: UIViewController {
+
+  // 더미 데이터
+  var dummyList = ["1", "2", "3"]
+
+  // 테이블뷰 정의
+  var myTableView: UITableView = {
+      let tableView = UITableView()
+      tableView.translatesAutoresizingMaskIntoConstraints = false
+      return tableView
+  }()
+
+  override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        myTableView.dataSource = self
+        myTableView.delegate = self
+        myTableView.register(MyCell.self, forCellReuseIdentifier: MyCell.identifier)
+        
+        view.addSubview(myTableView)
+        
+        NSLayoutConstraint.activate([
+            myTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            myTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            myTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            myTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+}
+```
+
+### UITableViewDataSource 프로토콜
+```
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dummyList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyCell.identifier, for: indexPath) as? MyCell else { return UITableViewCell() }
+        cell.label.text = dummyList[indexPath.row]
+        return cell
+    }
+}
 ```
 
 - 셀의 개수를 반환할 코드를 정의한다.
@@ -36,19 +78,27 @@ class NewVC: UIViewController, UITableVIewDataSource, UITableViewDelegate
 
 ```swift
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell") //UITableViewCell - 셀을 생성
-    cell.textLabel?.text = dummyList[indexPath.row] // 셀의 textLabel에 배열 텍스트 하나를 할당
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: MyCell.identifier, for: indexPath) as? MyCell else { return UITableViewCell() }
+    cell.label.text = dummyList[indexPath.row]
     return cell
 }
 ```
+> dequeueReusableCell : 재사용 큐에서 셀을 가져오는 메서드
+
 
 > **indexPath의 역할**
-> 
 > 
 > `cellForRowAt indexPath: IndexPath`의 `indexPath` 매개변수는 **어떤 셀을 생성해야 하는지 위치를 지정하는 역할**을 한다.
 > 
 > - `indexPath.section`: 섹션 번호 (어떤 섹션의 셀인지)
 > - `indexPath.row`: 행 번호 (해당 섹션 내에서 몇 번째 행인지)
+
+
+### UITableViewDelegate 프로토콜
+```
+
+```
+
 
 - 테이블에서 해당 셀이 선택되었을때 호출되는 함수
 
@@ -58,72 +108,24 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 ```
 
-### 📌 실행 흐름
 
-1. 사용자가 **테이블 뷰의 셀을 탭**하면 `didSelectRowAt`이 호출됨.
-2. `indexPath.row`와 `indexPath.section` 값을 이용해 **선택한 셀의 위치를 알 수 있음**.
-3. `print()` 문이 실행되어 **디버깅 정보가 콘솔에 출력됨**.
-
-> 예제 코드
-> 
-> 
-> ```swift
-> func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
->     let selectedItem = dummyList[indexPath.row] // 선택한 데이터 가져오기
->     let detailVC = DetailViewController()
->     detailVC.data = selectedItem
->     navigationController?.pushViewController(detailVC, animated: true) // 화면 이동
-> }
-> ```
-> 
-
----
-
-- 전체 코드
+- 셀의 높이를 커스터마이징하는 함수
 
 ```swift
-import Foundation
-import UIKit
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    // 1. indexPath를 사용하여 특정 셀의 데이터에 접근합니다.
+    let item = dataArray[indexPath.row]
 
-class NewVC : UIViewController, UITableViewDataSource, UITableViewDelegate {
-   
-    
-    
-    @IBOutlet var myTableView: UITableView!
-    
-    
-    var dummyList : [String] = [
-        "dummy data 1",
-        "dummy data 2",
-        "dummy data 3",
-    ]
-    
-    override func viewDidLoad() {
-    
-        super.viewDidLoad()
-        
-        myTableView.dataSource = self
-        myTableView.delegate = self
-        
+    // 2. 데이터에 따라 동적으로 높이를 계산하거나 지정합니다.
+    // 예를 들어, 텍스트가 길면 더 높은 셀을 반환합니다.
+    if item.isLongText {
+        return 120.0 // 긴 텍스트가 있는 셀의 높이
+    } else {
+        return 60.0 // 일반 셀의 높이
     }
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dummyList.count // 데이터의 갯수
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
-        cell.textLabel?.text = dummyList[indexPath.row]
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(#fileID, #function, #line, "- ")
-    }
-    
 }
-
 ```
+
+
+
+### 📌 실행 흐름
