@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         
         myTableView.dataSource = self
         myTableView.delegate = self
-        myTableView.register(MyCell.self, forCellReuseIdentifier: MyCell.identifier)
+        myTableView.register(MyCell.self, forCellReuseIdentifier: MyCell.identifier) // 커스텀셀, 셀 id로 테이블뷰에 등록
         
         view.addSubview(myTableView)
         
@@ -45,6 +45,14 @@ class ViewController: UIViewController {
     }
 }
 ```
+
+- 테이블뷰에 셀 등록
+```
+...
+  myTableView.register(MyCell.self, forCellReuseIdentifier: MyCell.identifier) // 커스텀셀, 셀 id로 테이블뷰에 등록
+...
+```
+
 
 ### UITableViewDataSource 프로토콜
 ```
@@ -83,7 +91,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     return cell
 }
 ```
-> dequeueReusableCell : 재사용 큐에서 셀을 가져오는 메서드
+> dequeueReusableCell : 재사용 큐(Reuse Queue)에서 셀을 가져오는 메서드
 
 
 > **indexPath의 역할**
@@ -96,26 +104,15 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 ### UITableViewDelegate 프로토콜
 ```
+extension ViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    print(#fileID, #function, #line, "- ")
+  }
 
-```
-
-
-- 테이블에서 해당 셀이 선택되었을때 호출되는 함수
-
-```swift
-func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(#fileID, #function, #line, "- ")
-    }
-```
-
-
-- 셀의 높이를 커스터마이징하는 함수
-
-```swift
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     // 1. indexPath를 사용하여 특정 셀의 데이터에 접근합니다.
     let item = dataArray[indexPath.row]
-
+  
     // 2. 데이터에 따라 동적으로 높이를 계산하거나 지정합니다.
     // 예를 들어, 텍스트가 길면 더 높은 셀을 반환합니다.
     if item.isLongText {
@@ -123,9 +120,100 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     } else {
         return 60.0 // 일반 셀의 높이
     }
+  }
+  
 }
 ```
 
 
+- 테이블에서 해당 셀이 선택되었을때 호출되는 함수
+
+```swift
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    print(#fileID, #function, #line, "- ")
+}
+```
+
+
+- 셀의 높이를 커스터마이징하는 함수
+
+```swift
+func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  // 1. indexPath를 사용하여 특정 셀의 데이터에 접근합니다.
+  let item = dataArray[indexPath.row]
+
+  // 2. 데이터에 따라 동적으로 높이를 계산하거나 지정합니다.
+  // 예를 들어, 텍스트가 길면 더 높은 셀을 반환합니다.
+  if item.isLongText {
+      return 120.0 // 긴 텍스트가 있는 셀의 높이
+  } else {
+      return 60.0 // 일반 셀의 높이
+  }
+}
+```
+
+### Cell
+- 테이블뷰에 아이템들을 나타내기 위한 요소
+
+1. 셀 재사용
+- 스크롤에서 사라진 셀은 "재사용 큐"에 보관됨
+- 스크롤을 내려 새로운 셀이 필요해지면 `UITableView`는 데이터 소스에게 `dequeueReusableCell(withIdentifier:for:`메서드로 재사용 가능한 셀 요청
+- 셀이 전달되면, UI는 그대로 두고 내부의 데이터만 새롭게 업데이트하여 반환
+
+2. 셀 커스텀
+- `UITableViewCell`을 상속받는 클래스를 만들어 사용
+- 여러 ui요소들을 적용
+예제
+```
+class MyCell: UITableViewCell {
+    
+    static let identifier: String = "MyCell" // 셀 고유 식별자 정의
+    
+    let label: UILabel = {
+       let label = UILabel()
+        label.backgroundColor = .gray
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(label)
+        
+        NSLayoutConstraint.activate([
+           label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+           label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+           label.topAnchor.constraint(equalTo: contentView.topAnchor),
+           label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+           label.heightAnchor.constraint(equalToConstant: 44) // 셀의 높이를 고정
+       ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+```
+
+
+
+
+
+
+
+
 
 ### 📌 실행 흐름
+
+1. 뷰컨트롤러가 초기화 되며 테이블뷰 생성
+2. `viewDidLoad`호출되면 테이블뷰에 `datasource`,`delegate` 세팅 / 테이블뷰에 셀 등록
+3. 테이블뷰 constraints 적용
+4. 델리게이트 패턴으로 인해 테이블뷰 내부에서 특정 함수들을 호출하면 책임을 위임받은 뷰컨트롤러에 정의된 함수들이 실행됨
+5. 데이터의 개수만큼 정의된 `tableview(tableView:cellForRowAt:)`함수가 동작하며 정의한 커스텀 셀을 재사용하거나 새로운 셀마다 데이터 입력
+
+
+
+
+
