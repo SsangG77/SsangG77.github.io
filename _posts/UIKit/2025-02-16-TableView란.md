@@ -152,58 +152,6 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
 }
 ```
 
-### Cell
-- 테이블뷰에 아이템들을 나타내기 위한 요소
-
-1. 셀 재사용
-- 스크롤에서 사라진 셀은 "재사용 큐"에 보관됨
-- 스크롤을 내려 새로운 셀이 필요해지면 `UITableView`는 데이터 소스에게 `dequeueReusableCell(withIdentifier:for:`메서드로 재사용 가능한 셀 요청
-- 셀이 전달되면, UI는 그대로 두고 내부의 데이터만 새롭게 업데이트하여 반환
-
-2. 셀 커스텀
-- `UITableViewCell`을 상속받는 클래스를 만들어 사용
-- 여러 ui요소들을 적용
-예제
-```
-class MyCell: UITableViewCell {
-    
-    static let identifier: String = "MyCell" // 셀 고유 식별자 정의
-    
-    let label: UILabel = {
-       let label = UILabel()
-        label.backgroundColor = .gray
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(label)
-        
-        NSLayoutConstraint.activate([
-           label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-           label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-           label.topAnchor.constraint(equalTo: contentView.topAnchor),
-           label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-           label.heightAnchor.constraint(equalToConstant: 44) // 셀의 높이를 고정
-       ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-```
-
-
-
-
-
-
-
-
 
 ### 📌 실행 흐름
 
