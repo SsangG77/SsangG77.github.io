@@ -1,5 +1,5 @@
 ---
-title: JAVA - Override
+title: Namespace에 대해서 알아보자
 date: 2025-08-18 12:00:00 +0900
 categories: [SwuftUI, 개념]
 tags: [SwiftUI]
