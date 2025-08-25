@@ -27,16 +27,16 @@ tags: [CollectionView]
    - UICollectionViewDelegateFlowLayout은 컬렉션 뷰의 레이아웃을 세밀하게 제어하는 데 사용되는 프로토콜입니다.
    - 역할 : UICollectionViewDelegateFlowLayout의 주요 역할은 UICollectionViewFlowLayout 객체가 컬렉션 뷰의 크기와 간격을 계산할 때 필요한 정보를 제공하는 것입니다. 이 프로토콜의 메서드들을 구현하여 각 셀, 헤더, 푸터의 크기와 섹션의 간격 등을 동적으로 설정할 수 있습니다.
    - 주요 메서드
-> collectionView(_:layout:sizeForItemAt:)
+> **`collectionView(_:layout:sizeForItemAt:)`**
 > 이 메서드는 각 아이템(셀)의 크기를 반환합니다. 이 메서드를 구현하면 모든 셀의 크기를 동일하게 만들거나, indexPath에 따라 각기 다른 크기를 가질 수 있도록 만들 수 있습니다.
 
-> collectionView(_:layout:insetForSectionAt:)
+> **`collectionView(_:layout:insetForSectionAt:)`**
 > 이 메서드는 **각 섹션의 여백(inset)**을 반환합니다. UIEdgeInsets를 사용하여 섹션의 상하좌우 여백을 설정할 수 있습니다.
 
-> collectionView(_:layout:minimumLineSpacingForSectionAt:)
+> **`collectionView(_:layout:minimumLineSpacingForSectionAt:)`**
 > 이 메서드는 같은 섹션 내의 행(line) 사이의 최소 간격을 반환합니다.
 
-> collectionView(_:layout:minimumInteritemSpacingForSectionAt:)
+> **`collectionView(_:layout:minimumInteritemSpacingForSectionAt:)`**
 > 이 메서드는 같은 행 내의 아이템(item) 사이의 최소 간격을 반환합니다.
 
 UICollectionViewDelegateFlowLayout을 사용하면 뷰의 크기 변화에 따라 컬렉션 뷰의 레이아웃을 유연하게 조정할 수 있어, 다양한 디바이스와 방향에 대응하는 반응형 UI를 만들 수 있습니다.
