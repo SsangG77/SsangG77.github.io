@@ -6,15 +6,8 @@ tags: [TableView, URLSession, 비동기, image, AutoLayout]
 ---
 
 
+# ViewController
 ```
-//
-//  ViewController.swift
-//  KHealthTest
-//
-//  Created by 차상진 on 8/28/25.
-//
-
-import UIKit
 
 //MARK: - ViewController
 class ViewController: UIViewController {
@@ -24,6 +17,8 @@ class ViewController: UIViewController {
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.rowHeight = UITableView.automaticDimension
         
         return tableView
     }()
@@ -36,7 +31,6 @@ class ViewController: UIViewController {
         tableView.register(MyCell.self, forCellReuseIdentifier: MyCell.identifier)
         tableView.dataSource = self
         
-        tableView.rowHeight = UITableView.automaticDimension
         
         view.addSubview(tableView)
         
@@ -48,18 +42,19 @@ class ViewController: UIViewController {
         ])
         
         
+        // images에 didSet 되면 클로저 호출해서 reload
         viewModel.imagesUpdates = { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
-        
-        
     }
-
-
 }
+```
 
+
+# ViewController - DataSource
+```
 //MARK: - DataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,20 +64,30 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyCell.identifier, for: indexPath) as? MyCell else { return MyCell() }
         
-        let imageLink = viewModel.images[indexPath.row]
-        cell.configure(url: imageLink)
+        let photo = viewModel.images[indexPath.row]
+        let imageLink = photo.src["medium"]
+        
+        
+        let aspectRatio = CGFloat(photo.width) / CGFloat(photo.height)
+        cell.configure(url: imageLink, aspectRatio: aspectRatio)
         
         return cell
     }
 }
+```
 
 
+# MyCell
+```
 
 //MARK: - Cell
 class MyCell: UITableViewCell {
     
     static let identifier = "cell"
     
+    // 이미지 다운로드 작업 참조 저장
+    private var imageDownloadTask: URLSessionDataTask?
+    private var aspectRatioConstraint: NSLayoutConstraint?
     
     let _imageView: UIImageView = {
         let imageView = UIImageView()
@@ -102,67 +107,91 @@ class MyCell: UITableViewCell {
             _imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             _imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             _imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-            
         ])
-        
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
-    func configure(url: String?) {
+    override func prepareForReuse() {
+            super.prepareForReuse()
+            // 셀 재사용 시 이전 다운로드 작업 취소
+            imageDownloadTask?.cancel()
+            imageDownloadTask = nil
+            _imageView.image = nil
+        
+            if let ratioContraint = aspectRatioConstraint {
+                _imageView.removeConstraint(ratioContraint)
+                self.aspectRatioConstraint = nil
+            }
+        }
+    
+    func configure(url: String?, aspectRatio: CGFloat) {
+        setAspectRatio(aspectRatio)
+        
+        self.imageDownloadTask?.cancel()
         
         guard let urlString = url, let url = URL(string: urlString) else {
             _imageView.image = UIImage(systemName: "square.and.arrow.up")
             return
         }
         
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+        imageDownloadTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            
+            guard !Task.isCancelled else { return }
+            
             guard let self,
                   let data = data,
                   response != nil,
                   error == nil else { return }
             DispatchQueue.main.async {
-                self._imageView.image = UIImage(data: data) ?? UIImage()
+                self._imageView.image = UIImage(data: data) ?? UIImage(systemName: "square.and.arrow.up")
                 
             }
-        }.resume()
-         
+        }
         
+        imageDownloadTask?.resume()
     }
     
+    private func setAspectRatio(_ ratio: CGFloat) {
+        if let aspectRatioContraint = aspectRatioConstraint {
+            _imageView.removeConstraint(aspectRatioContraint)
+        }
+        
+        aspectRatioConstraint = _imageView.widthAnchor.constraint(equalTo: _imageView.heightAnchor, multiplier: ratio)
+        aspectRatioConstraint?.isActive = true
+    }
 }
 
+```
+
+
+# ViewModel
+```
 
 //MARK: - ViewModel
 class ViewModel {
-    
     var imagesUpdates: (() -> Void)?
-    
-    var images: [String] = [] {
+    var images: [Photo] = [] {
         didSet {
             self.imagesUpdates?()
         }
     }
     
-    
-    
     init() {
         Task {
             do {
                 self.images = try await self.fetchImages()
-                print("images: \(self.images)")
             } catch {
                 print("ViewModel - fetchImages() error")
             }
         }
     }
     
-    func fetchImages() async throws -> [String] {
+    func fetchImages() async throws -> [Photo] {
         print(#function)
-        let apiKey = "******************************************"
+        let apiKey = "ZZBZygLLeWAl779RpQxzPY8J3uGAehcN091dA7KZhFvtOR454tV48vOu"
         let urlString = "https://api.pexels.com/v1/search?query=nature&per_page=10"
         
         guard let url = URL(string: urlString) else {
@@ -182,21 +211,21 @@ class ViewModel {
                         throw URLError(.badServerResponse) // 서버 응답 오류 처리
                     }
             let result = try JSONDecoder().decode(Response.self, from: data)
-            return result.photos.map {
-                $0.src["original"]!
-            }
+            return result.photos
             
         } catch {
             print("Data load Error: \(error)")
             throw error
         }
-        
-        
     }
 }
+```
+
+
+#Model
+```
 
 //MARK: - Model
-
 struct Response: Decodable {
     var page: Int
     var per_page: Int
