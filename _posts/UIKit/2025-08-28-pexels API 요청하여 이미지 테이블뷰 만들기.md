@@ -1,6 +1,6 @@
 ---
 title: pexels API 요청하여 이미지 테이블뷰 만들기
-date: 2025-08-29 12:00:00 +0900
+date: 2025-08-28 12:00:00 +0900
 categories: [UIKit, 실습]
 tags: [TableView, URLSession, 비동기, image, AutoLayout]
 ---
