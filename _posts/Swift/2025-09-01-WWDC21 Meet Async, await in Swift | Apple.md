@@ -1,5 +1,5 @@
 ---
-title: WWDC21: Meet Async/await in Swift | Apple
+title: WWDC21, Meet Async/await in Swift (Apple)
 date: 2025-09-01 12:00:00 +0900
 categories: [개념, Swift]
 tags: [Swift, 비동기]
