@@ -120,6 +120,14 @@ extension UIImage {
 
 
 ### for 반복문에서 await 사용
+```
+for await id in staticImageIDsURL.lines {
+  let thumbnail = await fetchThumbnail(for: id)
+  collage.add(thumbnail)
+}
+let result = await collage.draw()
+```
+
 
 
 
