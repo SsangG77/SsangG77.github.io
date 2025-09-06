@@ -128,6 +128,39 @@ for await id in staticImageIDsURL.lines {
 let result = await collage.draw()
 ```
 
+> `for await id in staticImageIDsURL.lines {`
+> `staticImageIDsURL.lines`에서 라인 하나를 가져올때까지 기다렸다가 가져와지면 반복문 한번 실행
+
+> `let thumbnail = await fetchThumbnail(for: id)`
+> `fetchThumbnail(for: id)`는 id로 썸네일을 응답받는 함수
+
+> `let result = await collage.draw()`
+> `collage`에 전부 할당이 되면 비동기로 `draw()`실행하여 반환
+
+
+# 동기 함수 & 비동기 함수가 동작할 때 일어나는 일
+
+## 동기 함수
+<img width="1722" height="297" alt="Image" src="https://github.com/user-attachments/assets/b9027db0-4d3a-4847-af27-c617cdec3703" />
+```
+func thumbnailURLRequest(for id: String) -> URLRequest {
+  // ...
+  return request
+}
+```
+- 스레드가 함수를 호출하면 호출한 스레드는 함수가 끝날때까지 담당
+- 동기 함수가 호출되면 스레드는 다른 스레드로 해당 작업을 넘기지 않고 해당 스레드가 작업을 수행하기 때문에 계속 점유되어짐
+- 해당 작업은 함수 자체의 본문에 있을 수도 있고 해당 함수가 호출하는 다른 함수에 있을 수도 있음
+- 결국 해당 함수는 값을 반환하거나 오류를 발생시켜 완료 -> 제어권이 해당 함수로 다시 넘어감
+
+
+## 비동기 함수
+
+
+
+
+
+
 
 
 
