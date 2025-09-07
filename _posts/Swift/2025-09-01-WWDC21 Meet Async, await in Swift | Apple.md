@@ -155,6 +155,21 @@ func thumbnailURLRequest(for id: String) -> URLRequest {
 
 
 ## 비동기 함수
+<img width="1603" height="474" alt="Image" src="https://github.com/user-attachments/assets/3a7800de-3f30-46ad-8ad1-a7e3f885f8aa" />
+```
+func thumbnailURLRequest(for id: String) async -> URLRequest {
+  // ...
+  let (data, response) = try await URLSession.shared.data(for: request)
+  // ...
+  return request
+}
+```
+- 비동기 함수가 시작되면 스레드에서 함수가 동작하다가 `await`를 만나면 일시 중단되고 그때 함수 상태는 런타임에 저장, 스레드에 대한 제어권은 런타임이 회수함
+- 즉 비동기 함수가 일시 중단되면 현재 스레드는 다른 작업에 자유롭게 사용되고, 함수 실행은 런타임이 나중에 다시 스레드를 할당해 이어서 실행함.
+- 함수가 일시정지되고 ***비동기 작업(네트워크 요청 등)은 시스템 레벨에서 처리됨***
+
+
+
 
 
 
