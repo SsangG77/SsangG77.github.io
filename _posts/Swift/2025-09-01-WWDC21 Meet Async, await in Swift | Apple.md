@@ -188,7 +188,19 @@ func thumbnailURLRequest(for id: String) async -> URLRequest {
 
 
 
-# 프로젝트에서 활용방법
+# XCTest 비동기
+```
+class MockViewModelSpec: XCTestCase {
+  func testFetchThumbnails() throws {
+    let expectiation = XCTestExpectation(description: "mock thumbnails completsion")
+    self.mockViewModel.fetchThumbnail(for: mockID) {
+      XCTAssertEqual(result?.size, CGSize(width: 40, height: 40))
+      expectation.fulfull()
+    }
+    wait(for: [expectation], timeout: 5.0)
+  }
+}
+```
 
 
 
