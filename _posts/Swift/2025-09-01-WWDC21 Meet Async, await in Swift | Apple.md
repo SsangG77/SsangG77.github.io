@@ -188,7 +188,9 @@ func thumbnailURLRequest(for id: String) async -> URLRequest {
 
 
 
-# XCTest 비동기
+# XCTest에서의 비동기
+
+- 비동기 적용 전
 ```
 class MockViewModelSpec: XCTestCase {
   func testFetchThumbnails() throws {
@@ -202,11 +204,55 @@ class MockViewModelSpec: XCTestCase {
 }
 ```
 
+- 비동기 적용 후
+```
+class MockViewModelSpec: XCTestCase {
+  func testFetchThumbnails() async throws {
+    let result = self.mockViewModel.fetchThumbnail(for: mockID)
+    XCTAssertEqual(result.size, CGSize(width: 40, height: 40))
+  }
+}
+```
 
+# SwiftUI에서의 비동기
 
+- 비동기 적용 전
+```
+struct ThumbnailView: View {
+  @ObservadObject var viewModel: ViewModel
+  var post: Post
+  @State private var image: UIImage?
 
+  var body: some View {
+    Image(uiImage: self.image ?? placeholder)
+      .onAppear {
+        self.viewModel.fetchThumbnail(for: post.id) {
+          self.image = result
+        }
+      }
+  }
+}
+```
+- 비동기 적용 후
+```
+struct ThumbnailView: View {
+  @ObservadObject var viewModel: ViewModel
+  var post: Post
+  @State private var image: UIImage?
 
-
+  var body: some View {
+    Image(uiImage: self.image ?? placeholder)
+      .onAppear {
+        Task {
+          self.image = try? await self.viewModel.fetchThumbnail(for: post.id)
+        }
+      }
+  }
+}
+```
+> `Task`는 작업을 클로저에 패키징하여 시스템으로 전송하여 다음에 사용 가능한 스레드에서 즉시 실행됩니다.
+> 이는 글로벌 디스패치 큐의 비동기 함수와 같습니다.
+> 여기서 가장 큰 장점은 비동기 코드를 동기화 컨텍스트 내부에서 호출할 수 있다는 것입니다.
 
 
 
